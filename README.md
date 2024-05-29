@@ -17,7 +17,3 @@ To run two simple benchmarks:
 $ make testbench
 $ ./testbench
 ```
-
-## Single Thread Version (lits)
-
-Single thread version supports lookup, insert, upsert, delete and scan.
