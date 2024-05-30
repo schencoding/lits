@@ -11,9 +11,19 @@ $ make example
 $ ./example
 ```
 
-To run two simple benchmarks:
+To run simple benchmarks:
 
 ```shell
 $ make testbench
-$ ./testbench
+
+# <str> can be 'idcards' or 'randstr'
+
+# Case 1: search only test
+$ ./testbench <str> 1
+
+# Case 2: insert only test
+$ ./testbench <str> 2
+
+# Case 3: scan only test
+$ ./testbench <str> 3
 ```
