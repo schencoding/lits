@@ -26,8 +26,8 @@ namespace lits {
 
     class LITSSingleThread {
     private:
-        // For bulk load, the index needs at least 16 strings to train the model
-        static const int min_bulk_load_size = 16;
+        // For bulk load, the index needs at least 1000 strings to train the model
+        static const int min_bulk_load_size = 1000;
 
         // Whether the index has been bulk loaded
         bool hasBeenBuild = false;
