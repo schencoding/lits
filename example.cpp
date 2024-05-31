@@ -128,7 +128,7 @@ void exampleMain() {
         std::cout << std::endl;
     }
 
-    //=====[Example 6: Scan]==============================================
+    //=====[Example 6: Delete]==============================================
     std::cout << "[Example 6][Delete]: Try to delete (" << YELLOW << word2
               << RESET << ") in the index ... ";
     auto result6 = index.remove(word2.c_str());
