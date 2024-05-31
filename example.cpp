@@ -1,9 +1,9 @@
 #include "lits/lits.hpp"
 
-#include <sys/time.h>
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <sys/time.h>
 #include <vector>
 
 #define RESET "\033[0m"
@@ -14,10 +14,10 @@
 
 std::vector<std::string> strings;
 
-char* raw_data;
+char *raw_data;
 int num_of_keys;
-char** keys;
-uint64_t* vals;
+char **keys;
+uint64_t *vals;
 
 void readWords() {
     std::ifstream file("words.txt");
@@ -43,7 +43,7 @@ void prepareData() {
     num_of_keys = strings.size();
 
     raw_data = new char[byte_size];
-    keys = new char*[num_of_keys];
+    keys = new char *[num_of_keys];
     vals = new uint64_t[num_of_keys];
 
     for (int i = 0; i < strings.size(); ++i) {
@@ -63,8 +63,9 @@ void freeData() {
 }
 
 void exampleMain() {
-    lits::LITSSingleThread index;
-    index.bulkload((const char**)(keys), (const uint64_t*)(vals), num_of_keys);
+    lits::LITS index;
+    index.bulkload((const char **)(keys), (const uint64_t *)(vals),
+                   num_of_keys);
 
     std::string word1 = "internation";
     std::string word2 = "internal";

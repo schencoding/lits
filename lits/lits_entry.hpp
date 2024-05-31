@@ -1,15 +1,3 @@
-/**
- * LITS is a learned index optimized for strings, it can support lookup, scan,
- * as well as online update.
- *
- * Author:  yifan yang
- * Company: ICT DB
- * Contact: yangyifan22z@ict.ac.cn
- * Last Modified Date: 2024-03-21 09:14:13 (Beijing Time)
- *
- * Copyright (c) 2024 ICT DB. All rights reserved.
- */
-
 #pragma once
 
 #include "lits_base.hpp"
@@ -17,41 +5,40 @@
 
 namespace lits {
 
-    class KV {
-    public:
-        str k;  // donnot take care of the raw string's space
-        val v;
-    };
+class KV {
+  public:
+    str k;
+    val v;
+};
 
-    // These two classes are reponsible for the KV iteration
-    class KVS1 {
-    public:
-        KVS1() = default;
-        KVS1(const KVS1& other) = delete;
-        KV operator[](int index) const { return {d[index]->k, d[index]->v}; }
-        kv* ret_kv(int index) const { return d[index]; }
-        void push(kv* _kv) { d.push_back(_kv); }
-        void self_delete() {
-            for (int i = 0; i < d.size(); ++i) {
-                free_kv(d[i]);
-            }
+// These two classes are reponsible for the KV iteration
+class KVS1 {
+  public:
+    KVS1() = default;
+    KVS1(const KVS1 &other) = delete;
+    KV operator[](int index) const { return {d[index]->k, d[index]->v}; }
+    kv *ret_kv(int index) const { return d[index]; }
+    void push(kv *_kv) { d.push_back(_kv); }
+    void self_delete() {
+        for (int i = 0; i < d.size(); ++i) {
+            free_kv(d[i]);
         }
-        int getSize() const { return d.size(); }
+    }
+    int getSize() const { return d.size(); }
 
-    private:
-        std::vector<kv*> d;
-    };
+  private:
+    std::vector<kv *> d;
+};
 
-    class KVS2 {
-    public:
-        KVS2(const str* keys, const val* vals)
-            : _keys(keys), _vals(vals) {}
-        KV operator[](int index) const { return {_keys[index], _vals[index]}; }
-        kv* ret_kv(int index) const { return new_kv(_keys[index], _vals[index]); }
+class KVS2 {
+  public:
+    KVS2(const str *keys, const val *vals) : _keys(keys), _vals(vals) {}
+    KV operator[](int index) const { return {_keys[index], _vals[index]}; }
+    kv *ret_kv(int index) const { return new_kv(_keys[index], _vals[index]); }
 
-    private:
-        const str* _keys;
-        const val* _vals;
-    };
+  private:
+    const str *_keys;
+    const val *_vals;
+};
 
-};  // namespace lits
+}; // namespace lits

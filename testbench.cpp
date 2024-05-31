@@ -233,7 +233,7 @@ void OutputResult(uint64_t checkSum, int numQuery, double second) {
 }
 
 void LITS_Search_test() {
-    lits::LITSSingleThread index;
+    lits::LITS index;
     uint64_t checkSum = 0;
     struct timeval tv1, tv2;
     double second;
@@ -262,7 +262,7 @@ void LITS_Search_test() {
 }
 
 void LITS_Insert_test() {
-    lits::LITSSingleThread index;
+    lits::LITS index;
     uint64_t checkSum = 0;
     struct timeval tv1, tv2;
     double second;
@@ -292,7 +292,7 @@ void LITS_Insert_test() {
 }
 
 void LITS_Scan_test() {
-    lits::LITSSingleThread index;
+    lits::LITS index;
     uint64_t checkSum = 0;
     struct timeval tv1, tv2;
     double second;
