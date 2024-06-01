@@ -1,4 +1,4 @@
-# LITS_openSource
+# LITS
 
 LITS is a learned index optimized for string keys.
 
