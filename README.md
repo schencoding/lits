@@ -8,6 +8,7 @@ To run a simple example:
 
 ```shell
 $ make example
+
 $ ./example
 ```
 
