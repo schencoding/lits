@@ -27,6 +27,9 @@ const int default_search_cnt = 1e7;
 const int default_scan_cnt = 1e6;
 const int default_scan_range = 100;
 
+// std::string will store strings with a length less than 16 locally. To ensure
+// unified memory access for the data, we store all the data in a buffer.
+
 // For bulk load
 char *bulk_data;
 char **bulk_keys;
