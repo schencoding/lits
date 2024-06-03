@@ -371,7 +371,7 @@ int main(int argc, char *argv[]) {
         LITS_Insert_test();
     }
 
-    // Do Insert-Search Test
+    // Do Scan Test
     if (testMode == 3) {
         std::cout << std::endl;
         std::cout << "\033[33m" << "[Short Scan Test] \\
