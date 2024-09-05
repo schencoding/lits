@@ -22,9 +22,9 @@ typedef enum {
 
 // Randomly generated keys (idcard)
 std::vector<std::string> keys;
-const int default_key_cnt = 2e7;
-const int default_search_cnt = 1e7;
-const int default_scan_cnt = 1e6;
+const int default_key_cnt = 2e6;
+const int default_search_cnt = 1e6;
+const int default_scan_cnt = 1e5;
 const int default_scan_range = 100;
 
 // std::string will store strings with a length less than 16 locally. To ensure
@@ -48,14 +48,7 @@ uint64_t dummy_value = 982;
 int num_of_insert;
 
 void generateKeys(strType t) {
-    if (t == idcards) {
-        std::cout << "Generating Idcards ... " << std::endl;
-        keys = IdGenerator::getIds(default_key_cnt);
-    } else {
-        std::cout << "Generating Randstr ... " << std::endl;
-        keys = IdGenerator::getRandstrs(default_key_cnt);
-    }
-    std::cout << keys.size() << " Keys Generated." << std::endl;
+    keys = IdGenerator::getKeys(default_key_cnt, t);
 }
 
 void _Myfree(void *&addr) {
@@ -76,6 +69,8 @@ void freeData() {
 }
 
 void prepareSearchQuerys() {
+    std::cout << "[Info]: Preparing search queries ..." << std::endl;
+
     // Prepare 20M keys (100% bulk load)
     int key_cnt = default_key_cnt;
     uint64_t bulk_byte_size = 0, bulk_ofs = 0;
@@ -128,6 +123,8 @@ void prepareSearchQuerys() {
 }
 
 void prepareInsertQuerys() {
+    std::cout << "[Info]: Preparing insert queries ..." << std::endl;
+
     // Prepare 20M keys (50% bulk load, 50% insert)
     int key_cnt = default_key_cnt;
     uint64_t bulk_byte_size = 0, bulk_ofs = 0;
@@ -177,6 +174,8 @@ void prepareInsertQuerys() {
 }
 
 void prepareScanQuerys() {
+    std::cout << "[Info]: Preparing scan queries ..." << std::endl;
+
     // Prepare 20M keys (100% bulk load)
     int key_cnt = default_key_cnt;
     uint64_t bulk_byte_size = 0, bulk_ofs = 0;
@@ -357,8 +356,8 @@ int main(int argc, char *argv[]) {
     // Do Search Test
     if (testMode == 1) {
         std::cout << std::endl;
-        std::cout << "\033[33m" << "[Search-Only Test] \\
-                    (100% bulk load, 10M random search)"
+        std::cout << "\033[33m" << "[Search-Only Test] (100% bulk load, "
+                  << default_search_cnt << " random search)"
                   << "\033[0m" << std::endl;
         prepareSearchQuerys();
         LITS_Search_test();
@@ -367,8 +366,8 @@ int main(int argc, char *argv[]) {
     // Do Insert Test
     if (testMode == 2) {
         std::cout << std::endl;
-        std::cout << "\033[33m" << "[Insert-Only Test] \\
-                    (50% bulk load, 50% random insert)"
+        std::cout << "\033[33m"
+                  << "[Insert-Only Test] (50% bulk load, 50% random insert)"
                   << "\033[0m" << std::endl;
         prepareInsertQuerys();
         LITS_Insert_test();
@@ -377,8 +376,8 @@ int main(int argc, char *argv[]) {
     // Do Scan Test
     if (testMode == 3) {
         std::cout << std::endl;
-        std::cout << "\033[33m" << "[Short Scan Test] \\
-                    (100% bulk load, 1M random scan)"
+        std::cout << "\033[33m" << "[Short Scan Test] (100% bulk load, "
+                  << default_scan_cnt << " random scan)"
                   << "\033[0m" << std::endl;
         prepareScanQuerys();
         LITS_Scan_test();

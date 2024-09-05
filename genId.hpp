@@ -1,12 +1,28 @@
 #pragma once
 
 #include <algorithm>
+#include <fstream>
+#include <iostream>
 #include <set>
 #include <string>
 #include <vector>
 
+bool fileExists(const std::string &filename) {
+    std::ifstream infile(filename);
+    return infile.good();
+}
+
+bool sortedAndUnique(const std::vector<std::string> &keys) {
+    for (int i = 1; i < keys.size(); ++i) {
+        if (keys[i - 1] >= keys[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 class IdGenerator {
-private:
+  private:
     static const int ProvinceCodeCnt = 34;
     static const int CityCodeCnt = 80;
     static const int CountyCodeCnt = 70;
@@ -22,17 +38,11 @@ private:
         return ProvinceCodes[rand() % ProvinceCodeCnt];
     }
 
-    static int getCityCode() {
-        return rand() % CityCodeCnt;
-    }
+    static int getCityCode() { return rand() % CityCodeCnt; }
 
-    static int getCountyCode() {
-        return rand() % CountyCodeCnt;
-    }
+    static int getCountyCode() { return rand() % CountyCodeCnt; }
 
-    static int getYearCode() {
-        return YearMin + rand() % (YearMax - YearMin);
-    }
+    static int getYearCode() { return YearMin + rand() % (YearMax - YearMin); }
 
     static int getMonthDayCode() {
         int month = rand() % 12 + 1;
@@ -49,27 +59,43 @@ private:
         }
     }
 
-    static int getPoliceCode() {
-        return rand() % PoliceCodeCnt;
-    }
+    static int getPoliceCode() { return rand() % PoliceCodeCnt; }
 
-    static int getGenderCode() {
-        return rand() % GenderCodeCnt;
-    }
+    static int getGenderCode() { return rand() % GenderCodeCnt; }
 
-    static int getCheckCode() {
-        return rand() % CheckCodeCnt;
-    }
+    static int getCheckCode() { return rand() % CheckCodeCnt; }
 
-public:
+  public:
     static std::string getId() {
         std::string ret;
         ret += std::to_string(getProvinceCode());
-        ret += std::to_string(getCityCode());
-        ret += std::to_string(getCountyCode());
+
+        int CityCode = getCityCode();
+        if (CityCode < 10) {
+            ret += "0";
+        }
+        ret += std::to_string(CityCode);
+
+        int CountyCode = getCountyCode();
+        if (CountyCode < 10) {
+            ret += "0";
+        }
+        ret += std::to_string(CountyCode);
+
         ret += std::to_string(getYearCode());
-        ret += std::to_string(getMonthDayCode());
-        ret += std::to_string(getPoliceCode());
+
+        int MonthDayCode = getMonthDayCode();
+        if (MonthDayCode < 1000) {
+            ret += "0";
+        }
+        ret += std::to_string(MonthDayCode);
+
+        int PoliceCode = getPoliceCode();
+        if (PoliceCode < 10) {
+            ret += "0";
+        }
+        ret += std::to_string(PoliceCode);
+
         ret += std::to_string(getGenderCode());
         ret += std::to_string(getCheckCode());
         return ret;
@@ -83,41 +109,55 @@ public:
         return ret;
     }
 
-    static std::vector<std::string> getIds(int cnt) {
-        std::set<std::string> idSet;  // Set to store unique IDs
+    static std::vector<std::string> getKeys(int cnt, int type) {
 
-        while (idSet.size() < cnt) {
-            std::string id = getId();
-            idSet.insert(id);
+        // The target file: Idcards.txt
+        std::string filename = type == 0 ? "Idcards.txt" : "Randstr.txt";
+
+        // Return Idcards
+        std::vector<std::string> ids;
+
+        if (fileExists(filename)) {
+            std::cout << "Reading keys from " << filename << " ... "
+                      << std::endl;
+            std::ifstream infile(filename);
+            std::string line;
+            ids.clear();
+            while (std::getline(infile, line)) {
+                ids.push_back(line);
+            }
+            infile.close();
+        } else {
+            std::cout << "File not found. Generating keys ... " << std::endl;
+
+            // Generate ids and store them in Idcards.txts
+            std::set<std::string> idSet;
+            while (idSet.size() < cnt) {
+                std::string id = type == 0 ? getId() : getRandstr();
+                idSet.insert(id);
+            }
+            ids.assign(idSet.begin(), idSet.end());
+            std::sort(ids.begin(), ids.end()); // Sort the IDs
+            std::cout << cnt << " Keys Generated in " << filename << std::endl;
+
+            // Write the ids into Idcards.txt
+            std::ofstream outFile(filename);
+            if (!outFile.is_open()) {
+                std::cerr << "Unable to open file: " << filename << std::endl;
+                exit(0);
+            }
+
+            for (const auto &str : ids) {
+                outFile << str << std::endl;
+            }
+
+            outFile.close();
         }
-
-        std::vector<std::string> ids(idSet.begin(), idSet.end());
-        std::sort(ids.begin(), ids.end());  // Sort the IDs
 
         return ids;
-    }
-
-    static std::vector<std::string> getRandstrs(int cnt) {
-        std::set<std::string> strSet;
-
-        while (strSet.size() < cnt) {
-            std::string id = getRandstr();
-            strSet.insert(id);
-        }
-
-        std::vector<std::string> strs(strSet.begin(), strSet.end());
-        std::sort(strs.begin(), strs.end());
-
-        return strs;
     }
 };
 
 const int IdGenerator::ProvinceCodes[IdGenerator::ProvinceCodeCnt] = {
-    11, 12, 13, 14, 15,
-    21, 22, 23,
-    31, 32, 33, 34, 35, 36, 37,
-    41, 42, 43, 44, 45, 46,
-    50, 51, 52, 53, 54,
-    61, 62, 63, 64, 65,
-    71,
-    81, 82};
+    11, 12, 13, 14, 15, 21, 22, 23, 31, 32, 33, 34, 35, 36, 37, 41, 42,
+    43, 44, 45, 46, 50, 51, 52, 53, 54, 61, 62, 63, 64, 65, 71, 81, 82};
