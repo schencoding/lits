@@ -164,7 +164,7 @@ class HPT {
     inline int getPos(const str key, const int size, int gcpl, double k = 1,
                       double b = 0) const {
         double ps = size * k;
-        double c = b;
+        double c = size * b;
 
         for (int i = gcpl; key[i] && ps >= 1; ++i) {
             const auto &uni = m[i & PS_MASK][key[i - 1] & FC_MASK][key[i]];
@@ -178,7 +178,7 @@ class HPT {
     inline int getPos_woGCPL(const str key, const int size, double k = 1,
                              double b = 0) const {
         double pro = size * k;
-        double cdf = b;
+        double cdf = size * b;
 
         const auto &uni = m[0][0][key[0]];
         cdf += pro * uni.CDF;
