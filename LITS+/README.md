@@ -126,6 +126,8 @@ Edit macros in `LIT+/litsPlus/src/litsPlus_base.hpp`:
 
 PMSS model data must be placed in `LIT+/PMSS/` with files: `litR.csv`, `litW.csv`, `hotR.csv`, `hotW.csv`.
 
+Please use the code and datasets on https://pan.baidu.com/s/1ZyA6YsdZoO4Pt6t2suKoMw?pwd=m5dl to train PMSS on your own platform.
+
 ### LIT-MT Optional Features
 
 Edit macros in `LIT-MT/litmt/litsRCU_base.hpp`:
