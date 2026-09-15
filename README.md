@@ -8,7 +8,7 @@ This repository contains the implementation of **LITS** (Learned Index for Strin
   - Paper: [LITS: An Optimized Learned Index for Strings](https://www.vldb.org/pvldb/vol17/p3415-chen.pdf)
 
 - **LITS+** (TODS 2025): An extended version with improved performance and additional features, including both single-threaded (LIT+) and multi-threaded (LIT-MT) implementations.
-  - Paper: To be announced
+  - Paper: [Learned Indices for String Keys with Optimized Performance and O(N) Space Cost](https://dl.acm.org/doi/pdf/10.1145/3841175)
 
 ## Repository Structure
 
