@@ -7,16 +7,17 @@ This repository contains the implementation of **LITS** (Learned Index for Strin
 - **LITS** (VLDB 2024): A learned index optimized for string keys.
   - Paper: [LITS: An Optimized Learned Index for Strings](https://www.vldb.org/pvldb/vol17/p3415-chen.pdf)
 
-- **LITS+** (TODS 2025): An extended version with improved performance and additional features, including both single-threaded (LIT+) and multi-threaded (LIT-MT) implementations.
+- **LITS+** (TODS 2026): An extended version with improved performance and additional features, including both single-threaded (LIT+) and multi-threaded (LIT-MT) implementations.
   - Paper: [Learned Indices for String Keys with Optimized Performance and O(N) Space Cost](https://dl.acm.org/doi/pdf/10.1145/3841175)
 
 ## Repository Structure
 
 ```
 lits/
-├── LITS/          # Original VLDB 2024 implementation
-├── LITS+/         # Extended TODS 2025 implementation
-└── README.md      # This file
+├── LITS/               # Original VLDB 2024 implementation
+├── LITS+/              # Extended TODS 2026 implementation
+├── reimplementations/  # Reimplementations of other baselines
+└── README.md           # This file
 ```
 
 ## Quick Start
