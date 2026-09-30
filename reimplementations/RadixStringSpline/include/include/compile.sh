@@ -1,0 +1,1 @@
+g++ -I. -Iencoders -Isymbol_selectors -Icode_assigners -Isuccinct_binary_trie test.cpp -o main -O3

@@ -1,0 +1,26 @@
+#ifndef CODE_ASSIGNER_H
+#define CODE_ASSIGNER_H
+
+#include <assert.h>
+#include <vector>
+
+#include "common.hpp"
+
+namespace hope {
+
+class CodeAssigner {
+ public:
+  virtual ~CodeAssigner(){};
+
+  virtual bool assignCodes(const std::vector<SymbolFreq> &symbol_freq_list,
+			std::vector<SymbolCode> *symbol_code_list) = 0;
+
+  // -1 means variable length
+  virtual int getCodeLen() const = 0;
+
+  virtual double getCompressionRate() const = 0;
+};
+
+}  // namespace hope
+
+#endif  // CODE_ASSIGNER_H
